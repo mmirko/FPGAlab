@@ -17,7 +17,14 @@ open_solution -reset "solution" -flow_target vivado
 set_part {xcu55c-fsvh2892-2L-e}
 create_clock -period 3.5
 
+# run C simulation
 csim_design -ldflags="-fuse-ld=gold"
+
+# run synthesis
 csynth_design
+
+# run cosimulations
+cosim_design -rtl verilog -ldflags="-fuse-ld=gold"
+cosim_design -rtl vhdl -ldflags="-fuse-ld=gold"
 
 exit

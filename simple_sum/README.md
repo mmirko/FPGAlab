@@ -7,7 +7,7 @@ This project defines a few simple functions to be synthesized, and a testbench t
 * `Makefile` with the different commands to run the different steps of the workflow (simulation, synthesis, etc)
 * `run_hls.tcl`: TCL script to create the Vitis HLS project and add the files to it
 * `src` folder with the source files for the code to be synthesized and the testbench
-  * `sum.h`, `sum.cc`: header and source file for the code to be synthethised
+  * `sum.h`, `sum.cc`: header and source file for the code to be synthesized
   * `testbench.cc`: source file for the testbench with random input generation and output checking
 
 ## Running the example (Makefile)

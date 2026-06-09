@@ -5,7 +5,8 @@ runhls:
 runhls25:
 	vitis-run --tcl run_hls.tcl
 
-xclbin:
+.PHONY: xclbin
+xclbin: runhls
 	v++ -l -t hw --platform xilinx_u55c_gen3x16_xdma_3_202210_1 -o firmware.xclbin proj/solution/impl/export.xo
 
 clean:

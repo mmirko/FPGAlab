@@ -5,14 +5,12 @@ N = 100
 x = np.random.randint(lo, hi, N, dtype='int16')
 y = np.random.randint(lo, hi, N, dtype='int16')
 
-# reference evaluation. I need to upcast manually
 z_cpu = x + y 
-# z_cpu = x.astype('int32') + y.astype('int32') 
 
 # load the bitfile onto device and get handle for IP
 overlay = pynq.Overlay('firmware.xclbin')
 
-bulksum = overlay.bulksum_1 # the "_1" is added by Vitis
+bulksum = overlay.bulksum_1 # the "_1" is added by default by Vitis to avoid name clashes if there are multiple IPs
 
 # print the function signature to verify
 print(f'IP signature: {bulksum.signature}')

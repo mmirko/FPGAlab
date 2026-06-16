@@ -1,10 +1,12 @@
 # create a project
 open_project -reset "proj"
-# specify the name of the function to synthetize
-set_top mul_add_basic
+
+# specify the name of the top-level function (i.e. the function that will be synthesized into hardware)
+set_top sum_or_mul
 
 # load source code for synthesis
 add_files src/func.cc
+
 # load source code for the testbench
 add_files -tb src/testbench.cc
 
@@ -22,7 +24,7 @@ csim_design -ldflags="-fuse-ld=gold"
 csynth_design
 
 # run cosimulations
-#cosim_design -rtl verilog -ldflags="-fuse-ld=gold"
-#cosim_design -rtl vhdl -ldflags="-fuse-ld=gold"
+# cosim_design -rtl verilog -ldflags="-fuse-ld=gold"
+# cosim_design -rtl vhdl -ldflags="-fuse-ld=gold"
 
 exit

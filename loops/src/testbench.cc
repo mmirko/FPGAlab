@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#define N 16
+#define N 256
 
 // void vec_add(int a[N], int b[N], int c[N]);
 

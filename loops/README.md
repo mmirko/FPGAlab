@@ -1,13 +1,4 @@
-# Arrays in HLS
-
-A function that reads two input arrays `a[i]`, `b[i]`, and computes the products (dropping the 8 least significant bits), and adds them up.
-
-It's implemented in 4 versions:
-
-* `mul_add_basic`: no pragmas specified.
-* `mul_add_alloff`: no pipelining, no partitioning
-* `mul_add_pipelined`: adding `#pragma HLS pipeline II=1`
-* `mul_add_partitioned`: adding `#pragma HLS array_partition variable=X complete` for both input arrays
+# Loops in HLS
 
 ## Structure of this example
 
@@ -32,7 +23,3 @@ It's implemented in 4 versions:
 After creating the project using the tcl script (default name from script is `proj`)
 
 `vitis_hls -p proj`
-
-## Hands-on checklist
-* [ ] Try out the different versions of the function and check the reports to see how the performance and resource utilization changes.
-* [ ] What happens with the pipelining version ?

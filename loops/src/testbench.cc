@@ -1,30 +1,27 @@
 #include "func.h"
 #include <cstdio>
 #include <cstdlib>
-#include <vector>
 
-int main(int argc, char **argv) {
+int main() {
     srand(125);
-    assert(argc > 2);
-    unsigned int ntest = atoi(argv[1]);
-    unsigned int ndata = atoi(argv[2]);
-    printf("Will run %u tests with max %u data\n", ntest, ndata);
-    assert(ndata > 5 && ntest > 0);
-    std::vector<ap_int<16>> a(ndata), b(ndata);
-    std::vector<ap_int<16>> c(ndata), c_ref(ndata);
-    for (unsigned int itest = 0; itest < ntest; ++itest) {
-        unsigned int n = (rand() % (ndata-5)) + 5;
-        assert(n <= ndata);
-        printf("Test %u, with %u data\n", itest, n);
-        for (unsigned int i = 0; i < n; ++i) {
-            a[i] = (rand() & 0xFFF);
-            b[i] = (rand() & 0xFFF);
-            c_ref[i] = a[i]+b[i];
+    ap_int<16> a[NDATA], b[NDATA]; 
+    ap_int<24> c_ref, c_fw;
+    for (unsigned int itest = 0, ntest = 20; itest <= ntest; ++itest) {
+        // create some input data
+        c_ref = 0;
+        for (unsigned int i = 0; i < NDATA; ++i) {
+            a[i] = ap_int<16>(rand() & 0xFFFF);
+            b[i] = ap_int<16>(rand() & 0xFFFF);
+            ap_int<24> sum = (a[i] * b[i]) >> 8;
+            c_ref += sum;
         }
-        loop_basic(n, a.data(), b.data(), c.data());
-        for (unsigned int i = 0; i < n; ++i) {
-            printf("%3u  %7d  %7d  %7d  %7d\n", i, a[i].to_int(), b[i].to_int(), c[i].to_int(), c_ref[i].to_int());
-            if (c[i] != c_ref[i]) return 1;
-        }
+
+        // call the function
+        c_fw = mul_add(a,b);
+        printf("Simple test: %d (%d expected)\n", c_fw.to_int(), c_ref.to_int());
+        if (c_fw != c_ref) return 1;
+
+        printf("\n");
     }
+    return 0;
 }

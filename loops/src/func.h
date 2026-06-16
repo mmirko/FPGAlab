@@ -1,3 +1,5 @@
-#include <ap_int.h>
+#include <ap_fixed.h>
 
-void loop_basic(unsigned int N, const ap_int<16> *x, const ap_int<16>* y, ap_int<16> *z) ;
+#define NDATA 128
+
+ap_int<24> mul_add(const ap_int<16> a[NDATA], const ap_int<16> b[NDATA]) ;

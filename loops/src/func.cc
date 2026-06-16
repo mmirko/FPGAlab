@@ -11,10 +11,14 @@ void vec_add(int a[N], int b[N], int c[N]) {
 
 loop_add:
     for (int i = 0; i < N; i++) {
-
+        
+        // #pragma HLS ARRAY_PARTITION variable=a complete
+        // #pragma HLS ARRAY_PARTITION variable=b complete
+        // #pragma HLS ARRAY_PARTITION variable=c complete
+        
         // #pragma HLS PIPELINE
         // #pragma HLS PIPELINE II=1
-        #pragma HLS UNROLL
+        // #pragma HLS UNROLL
         // #pragma HLS UNROLL factor=4
 
         c[i] = a[i] + b[i];

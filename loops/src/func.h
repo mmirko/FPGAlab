@@ -1,5 +1,5 @@
 #include <ap_fixed.h>
 
-#define NDATA 128
+#define N 16
 
-ap_int<24> mul_add(const ap_int<16> a[NDATA], const ap_int<16> b[NDATA]) ;
+void vec_add(int a[N], int b[N], int c[N]) ;

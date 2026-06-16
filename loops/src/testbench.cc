@@ -1,27 +1,52 @@
 #include "func.h"
-#include <cstdio>
-#include <cstdlib>
+
+#include <iostream>
+
+#define N 16
+
+// void vec_add(int a[N], int b[N], int c[N]);
 
 int main() {
-    srand(125);
-    ap_int<16> a[NDATA], b[NDATA]; 
-    ap_int<24> c_ref, c_fw;
-    for (unsigned int itest = 0, ntest = 20; itest <= ntest; ++itest) {
-        // create some input data
-        c_ref = 0;
-        for (unsigned int i = 0; i < NDATA; ++i) {
-            a[i] = ap_int<16>(rand() & 0xFFFF);
-            b[i] = ap_int<16>(rand() & 0xFFFF);
-            ap_int<24> sum = (a[i] * b[i]) >> 8;
-            c_ref += sum;
+
+    int a[N];
+    int b[N];
+    int c[N];
+    int expected[N];
+
+    for (int i = 0; i < N; i++) {
+        a[i] = i;
+        b[i] = 100 + i;
+        expected[i] = a[i] + b[i];
+    }
+
+    vec_add(a, b, c);
+
+    int errors = 0;
+
+    std::cout << "a\tb\tc\tref\n";
+
+    for (int i = 0; i < N; i++) {
+
+        std::cout
+            << a[i] << "\t"
+            << b[i] << "\t"
+            << c[i] << "\t"
+            << expected[i];
+
+        if (c[i] != expected[i]) {
+            errors++;
+            std::cout << "  ERROR";
         }
 
-        // call the function
-        c_fw = mul_add(a,b);
-        printf("Simple test: %d (%d expected)\n", c_fw.to_int(), c_ref.to_int());
-        if (c_fw != c_ref) return 1;
-
-        printf("\n");
+        std::cout << std::endl;
     }
-    return 0;
+
+    if (errors == 0) {
+        std::cout << "\nTEST PASSED" << std::endl;
+    } else {
+        std::cout << "\nTEST FAILED : " << errors
+                  << " errors" << std::endl;
+    }
+
+    return errors;
 }

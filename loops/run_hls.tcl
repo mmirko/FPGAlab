@@ -1,7 +1,7 @@
 # create a project
 open_project -reset "proj"
 # specify the name of the function to synthetize
-set_top mul_add
+set_top vec_add
 
 # load source code for synthesis
 add_files src/func.cc

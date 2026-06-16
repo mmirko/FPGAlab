@@ -1,14 +1,22 @@
-#include "func.h"
+#include <ap_int.h>
 
-ap_int<24> mul_add(const ap_int<16> a[NDATA], const ap_int<16> b[NDATA]) {
-//    #pragma HLS pipeline II=1
-//    #pragma HLS array_partition variable=a complete
-//    #pragma HLS array_partition variable=b complete
-    ap_int<24> sum = 0;
-    for (unsigned int i = 0; i < NDATA; ++i) {
-//        #pragma HLS unroll
-        ap_int<24> prod = (a[i] * b[i]) >> 8;
-        sum += prod;
+#define N 16
+
+void vec_add(int a[N], int b[N], int c[N]) {
+
+// #pragma HLS INTERFACE mode=s_axilite port=return
+// #pragma HLS INTERFACE mode=m_axi bundle=gmem0 port=a
+// #pragma HLS INTERFACE mode=m_axi bundle=gmem1 port=b
+// #pragma HLS INTERFACE mode=m_axi bundle=gmem2 port=c
+
+loop_add:
+    for (int i = 0; i < N; i++) {
+
+        // #pragma HLS PIPELINE
+        // #pragma HLS PIPELINE II=1
+        #pragma HLS UNROLL
+        // #pragma HLS UNROLL factor=4
+
+        c[i] = a[i] + b[i];
     }
-    return sum;
 }
